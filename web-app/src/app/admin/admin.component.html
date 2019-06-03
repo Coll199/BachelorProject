@@ -1,26 +1,61 @@
 <div style="text-align:center; margin-top: 50px">
-  <h1>Admin</h1>
-  <p>This page can only be accessed by administrators.</p>
+  <h1>Admin Panel</h1>
   <hr>
   <div class="container">
     <div class="row">
       <div class="col-sm">
-        <h2>Users</h2>
-        <li class="list-group-item">Cras justo odio</li>
-      </div>
-      <div class="col-sm">
-        <h2>Routes</h2>
+        <h1>Users</h1>
         <div>
           <ul class="list-group">
-            <li class="list-unstyled" *ngFor="let tRoute of tRoutes; index as routeId">
-              <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/routes', tRoute.id]">Line: {{tRoute.routeName}}</a>
+            <li class="list-unstyled" *ngFor="let user of users;">
+              <div class="list-group-item list-group-item-action">
+                <h3 class="mb-1">Username: {{user.username}}</h3>
+                <hr>
+                <p class="mb-1">Role: {{user.firstName}}</p>
+                <hr>
+                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/route', user.id]" >Edit</button>
+                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-success">Add User</button>
+      </div>
+      <div class="col-sm">
+        <h1>Routes</h1>
+        <div>
+          <ul class="list-group">
+            <li class="list-unstyled" *ngFor="let tRoute of tRoutes;">
+              <div class="list-group-item list-group-item-action">
+                <h3 class="mb-1">Line: {{tRoute.routeName}}</h3>
+                <hr>
+                <p class="mb-1">Stations: {{tRoute.stations}}</p>
+                <hr>
+                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/route', tRoute.id]" >Edit</button>
+                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+              </div>
             </li>
           </ul>
         </div>
       </div>
       <div class="col-sm">
-        <h2>Vehicles</h2>
-        <li class="list-group-item">Cras justo odio</li>
+        <h1>Vehicles</h1>
+        <div>
+          <ul class="list-group">
+            <li class="list-unstyled" *ngFor="let vehicle of vehicles;">
+              <div class="list-group-item list-group-item-action">
+                <h3 class="mb-1">Name: {{vehicle.name}}</h3>
+                <hr>
+                <h5 class="mb-1">Line: {{vehicle.route.routeName}}</h5>
+                <hr>
+                <h5 class="mb-1">{{vehicle.pi.ipAddress}}:{{vehicle.pi.port}}</h5>
+                <hr>
+                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/vehicle', vehicle.id]" >Edit</button>
+                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

@@ -25,7 +25,7 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [AuthGuard]
   },
-  { path: 'routes/:routeId',
+  { path: 'route/:routeId',
     component: TransportRouteComponent
   },
 

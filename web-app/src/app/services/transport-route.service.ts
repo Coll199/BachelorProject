@@ -10,6 +10,10 @@ export class TransportRouteService {
   constructor(private http: HttpClient) { }
 
   getAll() {
-    return this.http.get<TransportRoute[]>(`$localhost:4200/routes`);
+    return this.http.get<TransportRoute[]>(`http://localhost:8080/route/all`);
+  }
+
+  get(id: string) {
+    return this.http.get<TransportRoute>(`http://localhost:8080/route/` + id);
   }
 }

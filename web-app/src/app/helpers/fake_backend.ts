@@ -15,9 +15,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
     ];
 
-    const tRoute: TransportRoute[] = [{id: 1, stations: ['Brancoveanu', 'Rebreanu'], routeName: '33'},
-      {id: 5, stations: ['Emil Zola', 'Izlaz'], routeName: '7'}];
-
     const authHeader = request.headers.get('Authorization');
     const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
     const roleString = isLoggedIn && authHeader.split('.')[1];
@@ -58,13 +55,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       // get all users (admin only)
       if (request.url.endsWith('/users') && request.method === 'GET') {
-        if (role !== Role.Admin) { return unauthorised(); }
+        // if (role !== Role.Admin) { return unauthorised(); }
         return ok(users);
-      }
-
-      // get all routes
-      if (request.url.endsWith('/routes') && request.method === 'GET') {
-        return ok(tRoute);
       }
 
       // pass through any requests not handled above

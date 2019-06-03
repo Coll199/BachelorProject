@@ -1,9 +1,22 @@
-<div style="text-align:center; margin-top: 50px">
-  <h2>Hello</h2>
+<div style="text-align:center; margin-top: 100px">
   <div *ngIf="transportRoute">
-    <h3>{{ transportRoute.id }}</h3>
-    <h4>{{ transportRoute.routeName }}</h4>
-    <p>{{ transportRoute.stations }}</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+          <ul class="list-group">
+            <h1>Line:{{ transportRoute.routeName }}</h1>
+            <li class="list-unstyled" *ngFor="let station of transportRoute.stations;">
+              <div class="list-group-item">
+                <h3 class="mb-1">{{station}}</h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm">
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-

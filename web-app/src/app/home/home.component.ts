@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {TransportRouteService} from '../services/transport-route.service';
+import {TransportRoute} from '../models/TransportRoute';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +9,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  tRoutes: TransportRoute[] = [];
 
-  constructor() { }
+  constructor(private transportRouteService: TransportRouteService) { }
 
   ngOnInit() {
+    this.transportRouteService.getAll().pipe(first()).subscribe(routes => {
+      this.tRoutes = routes;
+    });
   }
 
 }

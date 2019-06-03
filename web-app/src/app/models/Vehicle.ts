@@ -1,5 +1,9 @@
-export class Vehicle{
+import {TransportRoute} from './TransportRoute';
+import {RaspberryPi} from './RaspberryPi';
+
+export class Vehicle {
   id: number;
   name: string;
-  routeId: number;
+  route: TransportRoute;
+  pi: RaspberryPi;
 }
