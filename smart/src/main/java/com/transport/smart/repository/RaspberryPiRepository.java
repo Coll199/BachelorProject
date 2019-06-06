@@ -4,4 +4,5 @@ import com.transport.smart.model.RaspberryPi;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RaspberryPiRepository extends JpaRepository<RaspberryPi, Long> {
+    boolean existsByIpAddress(String ipAddress);
 }

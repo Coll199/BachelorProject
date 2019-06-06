@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { AuthenticationService} from '../services/authentication.service';
 import {User} from '../models/User';
 
 @Injectable({
@@ -8,13 +8,33 @@ import {User} from '../models/User';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {}
 
   getAll() {
-    return this.http.get<User[]>(`$localhost:4200/users`);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + this.authenticationService.currentUserValue.token,
+      })
+    };
+    return this.http.get<any>(`http://localhost:8080/user/all`, httpOptions);
   }
 
   getById(id: number) {
-    return this.http.get<User>(`$localhost4200/users/${id}`);
+    return this.http.get<User>(`http://localhost:8080/user/${id}`);
+  }
+
+  register(user) {
+    return this.http.post(`http://localhost:8080/user/register`, user);
+  }
+
+  delete(id: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + this.authenticationService.currentUserValue.token,
+      })
+    };
+    return this.http.delete(`http://localhost:8080/user/` + id, httpOptions);
   }
 }

@@ -6,6 +6,11 @@ import {RegisterComponent} from './register/register.component';
 import {AdminComponent} from './admin/admin.component';
 import {AuthGuard} from './guards/auth.guard';
 import {TransportRouteComponent} from './transport-route/transport-route.component';
+import {AddTransportRouteComponent} from './add-transport-route/add-transport-route.component';
+import {SubscriptionComponent} from './subscription/subscription.component';
+import {AdminGuard} from './guards/admin.guard';
+import {AddVehicleComponent} from './add-vehicle/add-vehicle.component';
+import {VehicleComponent} from './vehicle/vehicle.component';
 
 const routes: Routes = [
   {
@@ -23,12 +28,27 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
   { path: 'route/:routeId',
     component: TransportRouteComponent
   },
-
+  { path: 'addRoute',
+    component: AddTransportRouteComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'subscription',
+    component: SubscriptionComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'addVehicle',
+    component: AddVehicleComponent,
+    canActivate: [AdminGuard]
+  },
+  { path: 'vehicle/:vehicleId',
+    component: VehicleComponent,
+    canActivate: [AdminGuard]
+  },
   // redirect to home otherwise
   { path: '**', redirectTo: ''}
 ];

@@ -2,7 +2,6 @@ package com.transport.smart;
 
 import com.transport.smart.security.JwtAuthEntryPoint;
 import com.transport.smart.security.JwtTokenFilter;
-import com.transport.smart.security.JwtTokenProvider;
 import com.transport.smart.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -56,11 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/users/login").permitAll()
-                .antMatchers("/users/register").permitAll()
+                .antMatchers("/user/login").permitAll()
+                .antMatchers("/user/register").permitAll()
                 .antMatchers("/route/**").permitAll()
                 .antMatchers("/vehicle/**").permitAll()
-                .antMatchers("/user/**").permitAll()
                 .antMatchers("/subscription/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

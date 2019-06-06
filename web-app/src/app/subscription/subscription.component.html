@@ -1,0 +1,22 @@
+<div style="margin-top: 60px">
+  <h2 style="text-align: center">Subscription</h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <h5 style="text-align: center" *ngIf="this.subscription">Expires on: {{this.subscription.expiresOn}}</h5>
+            <h5 style="text-align: center" *ngIf="!this.subscription">You have no subscription</h5>
+            <label for="days">Days</label>
+            <input type="text" [(ngModel)]="days" class="form-control"/>
+            <div class="alert alert-success" role="alert" *ngIf="isCreated">
+              Subscription updated
+            </div>
+            <button style="margin-top: 10px" type="button" class="btn btn-primary btn-block" (click)="onSubmit()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div style="margin-top: 60px">
+  <h2 style="text-align: center">Add Vehicle</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <label for="name">Name</label>
+            <input type="text" [(ngModel)]="veh.name" class="form-control"/>
+            <label for="route">Route Name</label>
+            <input type="text" [(ngModel)]="veh.route.routeName" class="form-control"/>
+            <label for="piIp">Raspberry Pi Ip Address</label>
+            <input type="text" [(ngModel)]="veh.pi.ipAddress" class="form-control"/>
+            <label for="piPort">Raspberry Pi Port</label>
+            <input type="text" [(ngModel)]="veh.pi.port" class="form-control"/>
+            <div class="alert alert-success" role="alert" *ngIf="isCreated">
+              Vehicle created successfully
+            </div>
+            <button style="margin-top: 10px" type="button" class="btn btn-primary btn-block" (click)="onSubmit()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

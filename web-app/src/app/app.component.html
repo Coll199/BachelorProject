@@ -6,24 +6,24 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" [routerLink]="['/']">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/profile">Profile</a>
+        <a class="nav-link" [routerLink]="['/subscription']" *ngIf="this.authenticationService.currentUser | async">Subscription</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin">Admin</a>
+        <a class="nav-link" [routerLink]="['/admin']" *ngIf="(this.authenticationService.currentUser | async) && this.authenticationService.isAdmin()">Admin</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/register"> Register</a>
+        <a class="nav-link" [routerLink]="['/register']" *ngIf="!(this.authenticationService.currentUser | async)"> Register</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/login"> Login</a>
+        <a class="nav-link" [routerLink]="['/login']" *ngIf="!(this.authenticationService.currentUser | async)"> Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/" (click)="logout()"> Logout</a>
+        <a class="nav-link" href="/" *ngIf="this.authenticationService.currentUser | async" (click)="logout()"> Logout</a>
       </li>
     </ul>
   </div>

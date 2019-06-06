@@ -2,6 +2,7 @@ package com.transport.smart.controller;
 
 import com.transport.smart.message.GenericMessage;
 import com.transport.smart.message.LoginRequest;
+import com.transport.smart.message.LoginResponse;
 import com.transport.smart.message.RegisterRequest;
 import com.transport.smart.model.Role;
 import com.transport.smart.model.User;
@@ -48,10 +49,19 @@ public class AuthController {
                         loginRequest.getPassword()
                 )
         );
+        User currentUser = userRepository.findByEmail(loginRequest.getEmail());
         String jwt = jwtProvider.createToken(loginRequest.getEmail(), userRepository.findByEmail(loginRequest.getEmail()).getRoles());
+        LoginResponse resp = new LoginResponse();
+        resp.setId(currentUser.getId());
+        resp.setEmail(currentUser.getEmail());
+        resp.setFirstName(currentUser.getFirstName());
+        resp.setLastName(currentUser.getLastName());
+        resp.setRoles(currentUser.getRoles());
+        resp.setToken(jwt);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         if(authentication.isAuthenticated())
-            return ResponseEntity.ok().body(new GenericMessage(jwt));
+            return ResponseEntity.ok().body(resp);
         return ResponseEntity.status(401).body(new GenericMessage("Bad credentials"));
     }
 
@@ -66,11 +76,15 @@ public class AuthController {
         user.setLastName(registerRequest.getLastName());
         user.setPassword(encoder.encode(registerRequest.getPassword()));
         user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        
         userRepository.save(user);
 
         return ResponseEntity.ok().body(new GenericMessage("User registered successfully"));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/email/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable("email") String email){
         if(!userRepository.existsByEmail(email)){
@@ -80,6 +94,7 @@ public class AuthController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getUser(@PathVariable("id") UUID id){
         if(!userRepository.existsById(id)){
             ResponseEntity.status(404).body(new GenericMessage("User not found"));
@@ -88,14 +103,20 @@ public class AuthController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<User> getAllUsers(){
         return userRepository.findAll();
 
     }
 
-    @GetMapping("/id")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String adminAccess() {
-        return ">>> Admin Contents";
+    public ResponseEntity<?> deleteUser(@PathVariable("id") UUID id){
+        if(!userRepository.existsById(id)){
+            ResponseEntity.status(404).body(new GenericMessage("User not found"));
+        }
+        userRepository.deleteById(id);
+        return ResponseEntity.ok().body(new GenericMessage("User deleted"));
     }
+
 }

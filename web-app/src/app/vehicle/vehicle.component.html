@@ -1,0 +1,23 @@
+<div style="text-align:center; margin-top: 100px">
+  <div *ngIf="vehicle">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img src="{{this.streamLink}}" alt="image">
+          <h3>Boarded:{{this.gotOn}} Exited:{{this.gotOff}} Validated:{{this.validated}}</h3>
+        </div>
+        <div class="col">
+          <div class="list-group-item">
+            <h3>Name:{{ vehicle.name }}</h3>
+            <hr>
+            <h3>Raspberry Ip </h3>
+            <hr>
+            <h3>{{vehicle.pi.ipAddress}}:{{vehicle.pi.port}}</h3>
+            <hr>
+            <h3>Route: {{vehicle.route.routeName}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

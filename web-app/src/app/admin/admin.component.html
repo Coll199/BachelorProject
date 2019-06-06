@@ -5,34 +5,40 @@
     <div class="row">
       <div class="col-sm">
         <h1>Users</h1>
+        <button type="button" class="btn btn-success btn-sm">Add User</button>
         <div>
           <ul class="list-group">
             <li class="list-unstyled" *ngFor="let user of users;">
-              <div class="list-group-item list-group-item-action">
-                <h3 class="mb-1">Username: {{user.username}}</h3>
+              <div class="list-group-item">
+                <h5 class="mb-1">Email: {{user.email}}</h5>
                 <hr>
-                <p class="mb-1">Role: {{user.firstName}}</p>
+                <h5 class="mb-1">Name: {{user.firstName}} {{user.lastName}}</h5>
+                <hr>
+                <p class="mb-1">{{user.roles}}</p>
                 <hr>
                 <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/route', user.id]" >Edit</button>
-                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteUser(user)">Delete</button>
               </div>
             </li>
           </ul>
         </div>
-        <button type="button" class="btn btn-success">Add User</button>
+
       </div>
       <div class="col-sm">
         <h1>Routes</h1>
+        <button type="button" [routerLink]="['/addRoute']" class="btn btn-success btn-sm">Add Route</button>
         <div>
           <ul class="list-group">
             <li class="list-unstyled" *ngFor="let tRoute of tRoutes;">
-              <div class="list-group-item list-group-item-action">
-                <h3 class="mb-1">Line: {{tRoute.routeName}}</h3>
+              <div class="list-group-item">
+                <h5 class="mb-1">Line: {{tRoute.routeName}}</h5>
                 <hr>
-                <p class="mb-1">Stations: {{tRoute.stations}}</p>
+                <h5>Stations</h5>
+                <hr>
+                <p class="mb-1">{{tRoute.stations}}</p>
                 <hr>
                 <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/route', tRoute.id]" >Edit</button>
-                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteRoute(tRoute)">Delete</button>
               </div>
             </li>
           </ul>
@@ -40,18 +46,20 @@
       </div>
       <div class="col-sm">
         <h1>Vehicles</h1>
+        <button type="button" [routerLink]="['/addVehicle']" class="btn btn-success btn-sm">Add Vehicle</button>
         <div>
           <ul class="list-group">
             <li class="list-unstyled" *ngFor="let vehicle of vehicles;">
-              <div class="list-group-item list-group-item-action">
+              <div class="list-group-item">
                 <h3 class="mb-1">Name: {{vehicle.name}}</h3>
                 <hr>
                 <h5 class="mb-1">Line: {{vehicle.route.routeName}}</h5>
                 <hr>
+                <h5>RaspberryPi: {{vehicle.pi.id}}</h5>
                 <h5 class="mb-1">{{vehicle.pi.ipAddress}}:{{vehicle.pi.port}}</h5>
                 <hr>
                 <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/vehicle', vehicle.id]" >Edit</button>
-                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteVehicle(vehicle)">Delete</button>
               </div>
             </li>
           </ul>

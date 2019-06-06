@@ -1,5 +1,5 @@
-export class Subscription{
+export class Subscription {
   id: number;
-  createdOn: Date;
-  expiresOn: Date;
+  createdOn: string;
+  expiresOn: string;
 }

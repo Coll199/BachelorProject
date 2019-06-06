@@ -13,7 +13,7 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -21,23 +21,22 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>(`$localhost:4200/users/authenticate`, { username, password })
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
-
-        return user;
+  login(email: string, password: string) {
+    return this.http.post<any>(`http://localhost:8080/user/login`, { email, password })
+      .pipe(map(resp => {
+        localStorage.setItem('user', JSON.stringify(resp));
+        this.currentUserSubject.next(resp);
+        return resp;
       }));
   }
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('user');
     this.currentUserSubject.next(null);
+  }
+
+  isAdmin() {
+    return this.currentUserValue.roles[0] === 'ROLE_ADMIN';
   }
 }
